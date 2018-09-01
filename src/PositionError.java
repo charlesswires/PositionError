@@ -27,9 +27,9 @@ public class PositionError extends JPanel{
 	private List<Integer> samplesWiFi1 = new ArrayList<Integer>();
 	private List<Integer> samplesWiFi2 = new ArrayList<Integer>();
 	private List<Integer> samplesWiFi3 = new ArrayList<Integer>();
-	private PositionError() throws IOException {
+	private PositionError(String file) throws IOException {
 		setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
-		Reader in = new FileReader("/Users/charlesswires/Documents/model.csv");
+		Reader in = new FileReader(file);
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
 		for (CSVRecord record : records) {
 			samplesWiFi1.add(Integer.parseInt(record.get(3).trim()));
@@ -288,9 +288,12 @@ public class PositionError extends JPanel{
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					pe = new PositionError();
+					if (args.length != 1) {
+						System.out.println("usage: java PositionError /Users/charlesswires/Documents/model.csv");
+						System.exit(1);
+					}
+					pe = new PositionError(args[0]);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				pe.new PaintDemo();

@@ -48,10 +48,12 @@ public class PositionError extends JPanel{
 	private static double NOISE_VALUE = 2.0;
 
 	protected static boolean render = true;
-	JLabel minxl= new JLabel("Number");
-	JTextField minx= new JTextField("2",20);
+	JLabel minxl= new JLabel("No Test Pts");
+	JTextField minx= new JTextField("2",10);
 	JLabel maxxl = new JLabel("Scale(pixels/m)");
 	JTextField maxx =new JTextField("5",20);
+	JLabel avel = new JLabel("Average No");
+	JTextField ave =new JTextField("1",10);	
 	JButton doRender= new JButton("Render");
 	JPanel canvas = new JPanel();
 	JFrame jfrm = new JFrame("Position Error ");
@@ -198,8 +200,22 @@ public class PositionError extends JPanel{
 		double r1 = Math.sqrt((x-x1)*(x-x1)+(y-y1)*(y-y1));
 		double r2 = Math.sqrt((x-x2)*(x-x2)+(y-y2)*(y-y2));
 		double r3 = Math.sqrt((x-x3)*(x-x3)+(y-y3)*(y-y3));
-		double R = meanPower*r1*r1/Math.abs(samplesWiFi1.get(i));
-		double r = meanPower*r2*r2/Math.abs(samplesWiFi2.get(i));
+		int aveNo = Integer.parseInt(ave.getText());
+		double sum1 = 0.0;
+		double sum2 = 0.0;
+		double sum3 = 0.0;
+		int j=0;
+		for(; j < aveNo && j+i < samplesWiFi1.size();j++) {
+			sum1 += Math.abs(samplesWiFi1.get(i+j));
+			sum2 += Math.abs(samplesWiFi2.get(i+j));
+			sum3 += Math.abs(samplesWiFi3.get(i+j));
+		}
+		double meanPower1 = sum1/(aveNo);
+		double meanPower2 = sum2/(aveNo);
+		double meanPower3 = sum3/(aveNo);
+
+		double R = meanPower*r1*r1/Math.abs(meanPower1);
+		double r = meanPower*r2*r2/Math.abs(meanPower2);
 		System.out.println(""+r1+","+r2+","+r3+","+meanPower+","+Math.sqrt(R)+","+Math.sqrt(r));
 
 		//work out y and x
@@ -228,7 +244,7 @@ public class PositionError extends JPanel{
 				(2*(a*a + b*b - 2*a*c + c*c - 2*b*d + d*d));
 		double tempx2  = -Math.sqrt(R-(tempy2-b)*(tempy2-b))+a;
   
-		double lastr = Math.sqrt(meanPower*r3*r3/Math.abs(samplesWiFi3.get(i)));
+		double lastr = Math.sqrt(meanPower*r3*r3/Math.abs(meanPower3));
 		;
 		double newr1 = Math.sqrt((tempx1-x3)*(tempx1-x3)+(tempy1-y3)*(tempy1-y3));
 		double newr2 = Math.sqrt((tempx2-x3)*(tempx2-x3)+(tempy2-y3)*(tempy2-y3));
@@ -273,6 +289,8 @@ public class PositionError extends JPanel{
 			temp.add(maxx);
 			temp.add(minxl);		
 			temp.add(minx);
+			temp.add(avel);		
+			temp.add(ave);
 			temp.add(doRender);
 			//			canvas.setVisible(true);
 			jfrm.add(temp, BorderLayout.NORTH);

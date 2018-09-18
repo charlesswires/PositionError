@@ -114,9 +114,9 @@ public class PositionError extends JPanel{
 			g.fillRect((int)Math.round(x), height-(int)Math.round(y+20), 6*20, 20);
 			g.setColor(Color.WHITE);
 
-			g.drawString("sx="+(double)Math.round(Math.sqrt(sumxx/points.size())*100)/100.0+
-					" sy="+(double)Math.round(Math.sqrt(sumyy/points.size())*100)/100.0, 
-					(int)Math.round(x), height-(int)Math.round(y));
+			g.drawString("sdx="+(double)Math.round(Math.sqrt(sumxx/points.size())*100)/100.0+
+					" sdy="+(double)Math.round(Math.sqrt(sumyy/points.size())*100)/100.0, 
+					(int)Math.round(x), height-(int)Math.round(y)-3);
 			g.setColor(Color.BLUE);
 			g.drawLine((int)Math.round(x-2*mx), height - (int)Math.round(y), (int)Math.round(x+2*mx), height -(int)Math.round(y));
 			g.drawLine((int)Math.round(x), height - (int)Math.round(y-2*mx), (int)Math.round(x), height -(int)Math.round(y+2*mx));

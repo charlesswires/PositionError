@@ -191,7 +191,7 @@ public class PositionError extends JPanel{
 		//		     (2*(a^2 + b^2 - 2*a*c + c^2 - 2*b*d + d^2))}}
 		double sum = 0.0;
 		for(Integer sample: samplesWiFi1) {
-			sum += Math.abs(sample);
+			sum += Math.pow(10.0,sample/10.0);
 		}
 		double meanPower = sum/samplesWiFi1.size();
 		//		  (x-a)^2 + (y-b)^2 == R
@@ -206,16 +206,16 @@ public class PositionError extends JPanel{
 		double sum3 = 0.0;
 		int j=0;
 		for(; j < aveNo && j+i < samplesWiFi1.size();j++) {
-			sum1 += Math.abs(samplesWiFi1.get(i+j));
-			sum2 += Math.abs(samplesWiFi2.get(i+j));
-			sum3 += Math.abs(samplesWiFi3.get(i+j));
+			sum1 += Math.pow(10.0,samplesWiFi1.get(i+j)/10.0);
+			sum2 += Math.pow(10.0,samplesWiFi2.get(i+j)/10.0);
+			sum3 += Math.pow(10.0,samplesWiFi3.get(i+j)/10.0);
 		}
 		double meanPower1 = sum1/(aveNo);
 		double meanPower2 = sum2/(aveNo);
 		double meanPower3 = sum3/(aveNo);
 
-		double R = meanPower*r1*r1/Math.abs(meanPower1);
-		double r = meanPower*r2*r2/Math.abs(meanPower2);
+		double R = meanPower*r1*r1/(meanPower1);
+		double r = meanPower*r2*r2/(meanPower2);
 		System.out.println(""+r1+","+r2+","+r3+","+meanPower+","+Math.sqrt(R)+","+Math.sqrt(r));
 
 		//work out y and x
@@ -244,7 +244,7 @@ public class PositionError extends JPanel{
 				(2*(a*a + b*b - 2*a*c + c*c - 2*b*d + d*d));
 		double tempx2  = -Math.sqrt(R-(tempy2-b)*(tempy2-b))+a;
   
-		double lastr = Math.sqrt(meanPower*r3*r3/Math.abs(meanPower3));
+		double lastr = Math.sqrt(meanPower*r3*r3/(meanPower3));
 		;
 		double newr1 = Math.sqrt((tempx1-x3)*(tempx1-x3)+(tempy1-y3)*(tempy1-y3));
 		double newr2 = Math.sqrt((tempx2-x3)*(tempx2-x3)+(tempy2-y3)*(tempy2-y3));

@@ -191,7 +191,7 @@ public class PositionError extends JPanel{
 		//		     (2*(a^2 + b^2 - 2*a*c + c^2 - 2*b*d + d^2))}}
 		double sum = 0.0;
 		for(Integer sample: samplesWiFi1) {
-			sum += Math.pow(10.0,sample/10.0);
+			sum += Math.pow(10.0,sample/10.0)/1000.0;
 		}
 		double meanPower = sum/samplesWiFi1.size();
 		//		  (x-a)^2 + (y-b)^2 == R
@@ -206,9 +206,9 @@ public class PositionError extends JPanel{
 		double sum3 = 0.0;
 		int j=0;
 		for(; j < aveNo && j+i < samplesWiFi1.size();j++) {
-			sum1 += Math.pow(10.0,samplesWiFi1.get(i+j)/10.0);
-			sum2 += Math.pow(10.0,samplesWiFi2.get(i+j)/10.0);
-			sum3 += Math.pow(10.0,samplesWiFi3.get(i+j)/10.0);
+			sum1 += Math.pow(10.0,samplesWiFi1.get(i+j)/10.0)/1000.0;
+			sum2 += Math.pow(10.0,samplesWiFi2.get(i+j)/10.0)/1000.0;
+			sum3 += Math.pow(10.0,samplesWiFi3.get(i+j)/10.0)/1000.0;
 		}
 		double meanPower1 = sum1/(aveNo);
 		double meanPower2 = sum2/(aveNo);
